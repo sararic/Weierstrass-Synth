@@ -4,7 +4,7 @@
 
 struct WeierstrassSound   : public juce::SynthesiserSound
 {
-    WeierstrassSound();
+    WeierstrassSound(double sampleRate);
 
     inline bool appliesToNote    (int) override        { return true; }
     inline bool appliesToChannel (int) override        { return true; }
@@ -23,7 +23,7 @@ struct WeierstrassSound   : public juce::SynthesiserSound
 
 private:
     juce::AudioSampleBuffer wavetable;
-    const unsigned int tableSize = 1 << 7; // 128 samples
+    unsigned int tableSize;
 };
 
 //==============================================================================

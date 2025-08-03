@@ -90,7 +90,7 @@ void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int /* samples
         for (auto i = 0; i < 4; ++i)
             synth.addVoice (new WeierstrassVoice(sampleRate));
 
-        synth.addSound (new WeierstrassSound());
+        synth.addSound (new WeierstrassSound(sampleRate));
 
         synth.setCurrentPlaybackSampleRate (sampleRate);
         midiCollector.reset (sampleRate);
