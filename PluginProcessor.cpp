@@ -145,10 +145,9 @@ void AudioPluginAudioProcessor::setLevel (double level)
 void AudioPluginAudioProcessor::setWeierstrassParameters (double a, double b)
 {
     auto ref_count_ptr = synth.getSound (0);
-    if (auto* weierstrassSound = dynamic_cast<WeierstrassSound*>(ref_count_ptr.get()))
-    {
-        weierstrassSound->createWavetable(a, b);
-    }
+    auto* weierstrassSound = dynamic_cast<WeierstrassSound*>(ref_count_ptr.get());
+    jassert (weierstrassSound != nullptr);
+    weierstrassSound->createWavetable(a, b);
     // ref_count_ptr is guaranteed to live until here
 }
 
