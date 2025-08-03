@@ -2,32 +2,31 @@
 
 WeierstrassSound::WeierstrassSound(double sampleRate)
 {
-    tableSize = sampleRate / 20.0; // 20 Hz base frequency
+    tableSize = (unsigned int) sampleRate / 20; // 20 Hz base frequency
+    maxFrequency =  sampleRate / (2.0 * 20.0); // Nyquist frequency rescaled to 20 Hz
     wavetable.setSize (1, (int) tableSize + 1);
     wavetable.clear();
-    createWavetable();
+    createWavetable(0.5, 7.0);
 }
 
-void WeierstrassSound::createWavetable()
+void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_b)
 {
     auto* samples = wavetable.getWritePointer (0);
 
-    int harmonics[] = { 1, 3, 5, 6, 7, 9, 13, 15 };
-    float harmonicWeights[] = { 0.5f, 0.1f, 0.05f, 0.125f, 0.09f, 0.005f, 0.002f, 0.001f };
+    double harmonic = 1.0;
+    double weight = 0.5;
 
-    jassert (juce::numElementsInArray (harmonics) == juce::numElementsInArray (harmonicWeights));
-
-    for (auto harmonic = 0; harmonic < juce::numElementsInArray (harmonics); ++harmonic)
+    while (harmonic <= maxFrequency)
     {
-        auto angleDelta = juce::MathConstants<double>::twoPi / (double) (tableSize) * harmonics[harmonic];
-        auto currentAngle = 0.0;
-
+        auto angleDelta = juce::MathConstants<double>::twoPi / (double) (tableSize) * harmonic;
+        double angle = 0.0;
         for (unsigned int i = 0; i < tableSize; ++i)
         {
-            auto sample = std::sin (currentAngle);
-            samples[i] += (float) sample * harmonicWeights[harmonic];
-            currentAngle += angleDelta;
+            samples[i] += weight * std::cos(angle);
+            angle += angleDelta;
         }
+        harmonic *= weierstrass_b; // Increase frequency for next harmonic
+        weight *= weierstrass_a; // Decrease weight for next harmonic
     }
 
     samples[tableSize] = samples[0];

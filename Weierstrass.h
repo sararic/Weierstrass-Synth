@@ -19,11 +19,12 @@ struct WeierstrassSound   : public juce::SynthesiserSound
         return tableSize;
     }
 
-    void createWavetable();
+    void createWavetable(double weierstrass_a, double weierstrass_b);
 
 private:
     juce::AudioSampleBuffer wavetable;
     unsigned int tableSize;
+    double maxFrequency; // Maximum frequency for the Weierstrass function
 };
 
 //==============================================================================
