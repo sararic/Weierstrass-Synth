@@ -19,6 +19,7 @@ public:
 
     void setEnvelopeParameters (juce::ADSR::Parameters newParams);
     void setLevel (double level);
+    void setWeierstrassParameters (double a, double b);
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
     using AudioProcessor::processBlock;

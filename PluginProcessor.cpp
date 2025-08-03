@@ -87,7 +87,7 @@ void AudioPluginAudioProcessor::changeProgramName (int index, const juce::String
 //==============================================================================
 void AudioPluginAudioProcessor::prepareToPlay (double sampleRate, int /* samplesPerBlock */)
 {
-        for (auto i = 0; i < 4; ++i)
+        for (auto i = 0; i < 10; ++i)
             synth.addVoice (new WeierstrassVoice(sampleRate));
 
         synth.addSound (new WeierstrassSound(sampleRate));
@@ -140,6 +140,16 @@ void AudioPluginAudioProcessor::setEnvelopeParameters (juce::ADSR::Parameters ne
 void AudioPluginAudioProcessor::setLevel (double level)
 {
     m_targetLevel = level;
+}
+
+void AudioPluginAudioProcessor::setWeierstrassParameters (double a, double b)
+{
+    auto ref_count_ptr = synth.getSound (0);
+    if (auto* weierstrassSound = dynamic_cast<WeierstrassSound*>(ref_count_ptr.get()))
+    {
+        weierstrassSound->createWavetable(a, b);
+    }
+    // ref_count_ptr is guaranteed to live until here
 }
 
 void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
