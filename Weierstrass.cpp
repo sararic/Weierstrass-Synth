@@ -31,7 +31,7 @@ void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_
 
     samples[tableSize] = samples[0];
 
-    double gain = wavetable.getMagnitude(0, wavetable.getNumSamples()); // Normalize the wavetable
+    double gain = 1/wavetable.getMagnitude(0, wavetable.getNumSamples()); // Normalize the wavetable
     wavetable.applyGain(0, 0, wavetable.getNumSamples(), (float) gain);
 }
 
