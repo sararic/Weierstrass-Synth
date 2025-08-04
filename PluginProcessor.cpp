@@ -173,6 +173,12 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
             channelData[sample] *= (float) m_level; // Apply level to the output
         }
     }
+
+    if (!juce::approximatelyEqual (m_level, m_targetLevel)) {
+        auto localLevel = m_targetLevel;
+        buffer.applyGainRamp (0, buffer.getNumSamples(), m_level, localLevel);
+        m_level = localLevel;
+    }
 }
 
 //==============================================================================
