@@ -1,7 +1,9 @@
 # Weierstrass Synth
 
-A simple JUCE plugin that implements a synth based on the
+A simple JUCE synth plugin that implements a synth based on the
 [Weierstrass Function](https://en.wikipedia.org/wiki/Weierstrass_function).
+
+![image](example.png)
 
 ## Build
 

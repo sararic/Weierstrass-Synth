@@ -70,11 +70,11 @@ juce_add_plugin(WeierstrassSynth
 
 target_sources(WeierstrassSynth
     PRIVATE
-        PluginEditor.cpp
-        PluginProcessor.cpp
-        Weierstrass.cpp
-        EnvelopeComponent.cpp
-        WaveVisualizerComponent.cpp)
+        src/PluginEditor.cpp
+        src/PluginProcessor.cpp
+        src/Weierstrass.cpp
+        src/EnvelopeComponent.cpp
+        src/WaveVisualizerComponent.cpp)
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
 # project, these might be passed in the 'Preprocessor Definitions' field. JUCE modules also make use
