@@ -2,7 +2,7 @@
 #include "PluginProcessor.h"
 
 WaveVisualizerComponent::WaveVisualizerComponent ()
-    : juce::Component(), canvas (juce::Image::ARGB, 800, 400, true)
+    : juce::Component()
 {
     setOpaque (true); // Make the component opaque to avoid flickering
 }
@@ -14,15 +14,15 @@ WaveVisualizerComponent::~WaveVisualizerComponent()
 
 void WaveVisualizerComponent::setWaveform (juce::AudioSampleBuffer const& waveform)
 {
-    canvas = juce::Image (juce::Image::ARGB, 800, 400, true);
+    canvas = juce::Image (juce::Image::ARGB, getWidth(), getHeight(), true);
     auto graphics = juce::Graphics (canvas);
     graphics.fillAll (juce::Colours::black);
 
     // Draw the waveform
     graphics.setColour (juce::Colours::white);
 
-    auto delta_x = 800.0f / (float) waveform.getNumSamples();
-    auto delta_y = 200.0f;
+    auto delta_x = (float) getWidth() / (float) waveform.getNumSamples();
+    auto delta_y = (float) getHeight() / 2.0f;
     for (int channel = 0; channel < waveform.getNumChannels(); ++channel)
     {
         auto* channelData = waveform.getReadPointer (channel);
