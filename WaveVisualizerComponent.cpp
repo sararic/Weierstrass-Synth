@@ -16,10 +16,10 @@ void WaveVisualizerComponent::setWaveform (juce::AudioSampleBuffer const& wavefo
 {
     canvas = juce::Image (juce::Image::ARGB, getWidth(), getHeight(), true);
     auto graphics = juce::Graphics (canvas);
-    graphics.fillAll (juce::Colours::black);
+    graphics.fillAll (juce::Colours::transparentBlack);
 
     // Draw the waveform
-    graphics.setColour (juce::Colours::white);
+    graphics.setColour (juce::Colours::lightblue);
 
     auto delta_x = (float) getWidth() / (float) waveform.getNumSamples();
     auto delta_y = (float) getHeight() / 2.0f;
@@ -29,9 +29,9 @@ void WaveVisualizerComponent::setWaveform (juce::AudioSampleBuffer const& wavefo
         for (int sample = 0; sample < waveform.getNumSamples() - 1; ++sample)
         {
             float x1 = (float) sample * delta_x;
-            float y1 = (1 - channelData[sample]) * delta_y;
+            float y1 = (channelData[sample] + 1) * delta_y;
             float x2 = ((float) sample + 1) * delta_x;
-            float y2 = (1 - channelData[sample + 1]) * delta_y;
+            float y2 = (channelData[sample +1] + 1) * delta_y;
 
             graphics.drawLine (x1, y1, x2, y2);
         }
@@ -41,5 +41,6 @@ void WaveVisualizerComponent::setWaveform (juce::AudioSampleBuffer const& wavefo
 
 void WaveVisualizerComponent::paint (juce::Graphics& g)
 {
+    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
     g.drawImage (canvas, getLocalBounds().toFloat());
 }
