@@ -16,7 +16,7 @@ git clone https://github.com/sararic/Weierstrass-Synth
 Clone the `JUCE` repository into a subdirectory:
 
 ```shell
-cd Weierstrass\ Synth
+cd Weierstrass-Synth
 git clone https://github.com/juce-framework/JUCE
 ```
 
