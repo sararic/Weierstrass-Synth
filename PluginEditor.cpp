@@ -77,7 +77,7 @@ void AudioPluginAudioProcessorEditor::resized()
     weierstrassASlider.setBounds (10, getHeight() - 110, 100, 100);
     weierstrassBSlider.setBounds (120, getHeight() - 110, 100, 100);
     waveVisualizerComponent.setBounds (10, 10, 210, getHeight() - 150);
-    envelopeComponent.setBounds (230, 10, getWidth() - 350, getHeight() - 20);
+    envelopeComponent.setBounds (240, 100, getWidth() - 360, getHeight() - 200);
     levelSlider.setBounds (getWidth() - 110, 50, 100, getHeight() - 100);
 }
 
