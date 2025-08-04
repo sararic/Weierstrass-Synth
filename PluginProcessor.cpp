@@ -151,6 +151,11 @@ void AudioPluginAudioProcessor::setWeierstrassParameters (double a, double b)
     // ref_count_ptr is guaranteed to live until here
 }
 
+juce::SynthesiserSound::Ptr AudioPluginAudioProcessor::getSoundRef() const
+{
+    return synth.getSound (0);
+}
+
 void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
                                               juce::MidiBuffer& midiMessages)
 {

@@ -1,5 +1,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Weierstrass.h"
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
@@ -54,6 +55,9 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
         processorRef.setEnvelopeParameters (envelopeComponent.getEnvelopeParameters());
     };
 
+    addAndMakeVisible (waveVisualizerComponent);
+    startTimer(10); // Start the timer to update the visualizer
+
     setSize (800, 400);
 }
 
@@ -72,6 +76,7 @@ void AudioPluginAudioProcessorEditor::resized()
 {
     weierstrassASlider.setBounds (10, getHeight() - 110, 100, 100);
     weierstrassBSlider.setBounds (120, getHeight() - 110, 100, 100);
+    waveVisualizerComponent.setBounds (10, 10, 210, getHeight() - 120);
     envelopeComponent.setBounds (230, 10, getWidth() - 350, getHeight() - 20);
     levelSlider.setBounds (getWidth() - 110, 50, 100, getHeight() - 100);
 }
@@ -80,6 +85,9 @@ void AudioPluginAudioProcessorEditor::timerCallback()
 {
     // Here we update the Weierstrass parameters, no more than once every 100 ms
     // to avoid flooding the processor with too many calls.
-    stopTimer();
     processorRef.setWeierstrassParameters(weierstrassASlider.getValue(), weierstrassBSlider.getValue());
+    auto sound_ref_count_ptr = processorRef.getSoundRef();
+    auto wavetable = dynamic_cast<WeierstrassSound*>(sound_ref_count_ptr.get())->get_wavetable();
+    waveVisualizerComponent.setWaveform (wavetable);
+    stopTimer();
 }

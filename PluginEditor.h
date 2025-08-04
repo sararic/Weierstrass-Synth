@@ -3,6 +3,7 @@
 
 #include "PluginProcessor.h"
 #include "EnvelopeComponent.h"
+#include "WaveVisualizerComponent.h"
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor final : public juce::AudioProcessorEditor,
@@ -22,6 +23,7 @@ private:
     juce::MidiKeyboardState keyboardState;
 
     EnvelopeComponent envelopeComponent;
+    WaveVisualizerComponent waveVisualizerComponent;
 
     juce::Slider levelSlider;
     juce::Label levelLabel;

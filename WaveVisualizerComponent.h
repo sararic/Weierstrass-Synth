@@ -6,7 +6,7 @@
 class WaveVisualizerComponent : public juce::Component
 {
 public:
-    WaveVisualizerComponent (unsigned width, unsigned height, juce::AudioSampleBuffer const& waveform);
+    WaveVisualizerComponent ();
     ~WaveVisualizerComponent() override;
 
     void setWaveform (juce::AudioSampleBuffer const& waveform);
