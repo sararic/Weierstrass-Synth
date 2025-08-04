@@ -176,7 +176,7 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
     if (!juce::approximatelyEqual (m_level, m_targetLevel)) {
         auto localLevel = m_targetLevel;
-        buffer.applyGainRamp (0, buffer.getNumSamples(), m_level, localLevel);
+        buffer.applyGainRamp (0, buffer.getNumSamples(), (float) m_level, (float) localLevel);
         m_level = localLevel;
     }
 }
