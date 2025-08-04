@@ -5,12 +5,12 @@ WeierstrassSound::WeierstrassSound(double sampleRate)
     tableSize = (unsigned int) sampleRate / 20; // 20 Hz base frequency
     maxFrequency =  sampleRate / (2.0 * 20.0); // Nyquist frequency rescaled to 20 Hz
     wavetable.setSize (1, (int) tableSize + 1);
-    wavetable.clear();
     createWavetable(0.5, 7.0);
 }
 
 void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_b)
 {
+    wavetable.clear();
     auto* samples = wavetable.getWritePointer (0);
 
     double harmonic = 1.0;
