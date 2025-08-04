@@ -14,7 +14,7 @@ void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_
     auto* samples = wavetable.getWritePointer (0);
 
     double harmonic = 1.0;
-    double weight = 0.5;
+    double weight = 1.0;
 
     while (harmonic <= maxFrequency)
     {
@@ -30,6 +30,9 @@ void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_
     }
 
     samples[tableSize] = samples[0];
+
+    double gain = (1 - weierstrass_a) / (1 - weight); // Normalize the wavetable
+    wavetable.applyGain(0, 0, wavetable.getNumSamples(), gain);
 }
 
 WeierstrassVoice::WeierstrassVoice(double sampleRate)
