@@ -10,7 +10,7 @@ A simple JUCE synth plugin that implements a synth based on the
 Clone this repository:
 
 ```shell
-git clone <blank>
+git clone https://github.com/sararic/Weierstrass-Synth
 ```
 
 Clone the `JUCE` repository into a subdirectory:
