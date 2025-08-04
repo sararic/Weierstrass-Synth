@@ -22,7 +22,7 @@ void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_
         double angle = 0.0;
         for (unsigned int i = 0; i < tableSize; ++i)
         {
-            samples[i] += weight * std::cos(angle);
+            samples[i] += (float) (weight * std::cos(angle));
             angle += angleDelta;
         }
         harmonic *= weierstrass_b; // Increase frequency for next harmonic
@@ -31,8 +31,8 @@ void WeierstrassSound::createWavetable(double weierstrass_a, double weierstrass_
 
     samples[tableSize] = samples[0];
 
-    double gain = (1 - weierstrass_a) / (1 - weight); // Normalize the wavetable
-    wavetable.applyGain(0, 0, wavetable.getNumSamples(), gain);
+    double gain = wavetable.getMagnitude(0, wavetable.getNumSamples()); // Normalize the wavetable
+    wavetable.applyGain(0, 0, wavetable.getNumSamples(), (float) gain);
 }
 
 WeierstrassVoice::WeierstrassVoice(double sampleRate)
