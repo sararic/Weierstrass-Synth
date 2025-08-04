@@ -21,7 +21,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     levelLabel.setJustificationType (juce::Justification::centred);
 
     addAndMakeVisible (weierstrassASlider);
-    weierstrassASlider.setRange (0.0, 1.0, 0.01);
+    weierstrassASlider.setRange (0.01, 0.99, 0.01);
     weierstrassASlider.setValue (0.5, juce::dontSendNotification);
     weierstrassASlider.setSliderStyle (juce::Slider::Rotary);
     weierstrassASlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
@@ -36,7 +36,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     weierstrassALabel.setJustificationType (juce::Justification::centred);
 
     addAndMakeVisible (weierstrassBSlider);
-    weierstrassBSlider.setRange (7.0, 30.0, 0.01);
+    weierstrassBSlider.setRange (7.0, 30.0, 1.0);
     weierstrassBSlider.setValue (7.0, juce::dontSendNotification);
     weierstrassBSlider.setSliderStyle (juce::Slider::Rotary);
     weierstrassBSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
