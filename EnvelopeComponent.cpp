@@ -1,6 +1,7 @@
 #include "EnvelopeComponent.h"
 
 EnvelopeComponent::EnvelopeComponent()
+    : juce::Component()
 {
     setSize (400, 200);
 
