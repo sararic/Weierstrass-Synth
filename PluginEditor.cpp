@@ -23,7 +23,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 
     addAndMakeVisible (weierstrassASlider);
     weierstrassASlider.setRange (0.01, 0.99, 0.01);
-    weierstrassASlider.setValue (0.5, juce::dontSendNotification);
+    weierstrassASlider.setValue (0.25, juce::dontSendNotification);
     weierstrassASlider.setSliderStyle (juce::Slider::Rotary);
     weierstrassASlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
     weierstrassASlider.onValueChange = [this] {
@@ -76,7 +76,7 @@ void AudioPluginAudioProcessorEditor::resized()
 {
     weierstrassASlider.setBounds (10, getHeight() - 110, 100, 100);
     weierstrassBSlider.setBounds (120, getHeight() - 110, 100, 100);
-    waveVisualizerComponent.setBounds (10, 10, 210, getHeight() - 120);
+    waveVisualizerComponent.setBounds (10, 10, 210, getHeight() - 150);
     envelopeComponent.setBounds (230, 10, getWidth() - 350, getHeight() - 20);
     levelSlider.setBounds (getWidth() - 110, 50, 100, getHeight() - 100);
 }
