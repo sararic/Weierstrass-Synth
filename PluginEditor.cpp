@@ -5,8 +5,6 @@
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
     : AudioProcessorEditor (&p), processorRef (p)
 {
-    juce::ignoreUnused (processorRef);
-
     addAndMakeVisible(levelSlider);
     levelSlider.setRange (-100, 0, 0.1);
     levelSlider.setValue (-13, juce::dontSendNotification);
@@ -21,6 +19,38 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     levelLabel.setText ("Output\nLevel", juce::dontSendNotification);
     levelLabel.attachToComponent (&levelSlider, false);
     levelLabel.setJustificationType (juce::Justification::centred);
+
+    addAndMakeVisible (weierstrassASlider);
+    weierstrassASlider.setRange (0.0, 1.0, 0.01);
+    weierstrassASlider.setValue (0.5, juce::dontSendNotification);
+    weierstrassASlider.setSliderStyle (juce::Slider::Rotary);
+    weierstrassASlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
+    weierstrassASlider.onValueChange = [this] {
+        if (this->weierstrassASlider.isMouseButtonDown())
+            return; // Prevents recursive calls when dragging the slider
+        processorRef.setWeierstrassParameters (weierstrassASlider.getValue(), weierstrassBSlider.getValue());
+    };
+
+    addAndMakeVisible (weierstrassALabel);
+    weierstrassALabel.setText ("a", juce::dontSendNotification);
+    weierstrassALabel.attachToComponent (&weierstrassASlider, false);
+    weierstrassALabel.setJustificationType (juce::Justification::centred);
+
+    addAndMakeVisible (weierstrassBSlider);
+    weierstrassBSlider.setRange (0.0, 15.0, 0.01);
+    weierstrassBSlider.setValue (7.0, juce::dontSendNotification);
+    weierstrassBSlider.setSliderStyle (juce::Slider::Rotary);
+    weierstrassBSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
+    weierstrassBSlider.onValueChange = [this] {
+        if (this->weierstrassBSlider.isMouseButtonDown())
+            return;
+        processorRef.setWeierstrassParameters (weierstrassASlider.getValue(), weierstrassBSlider.getValue());
+    };
+
+    addAndMakeVisible (weierstrassBLabel);
+    weierstrassBLabel.setText ("b", juce::dontSendNotification);
+    weierstrassBLabel.attachToComponent (&weierstrassBSlider, false);
+    weierstrassBLabel.setJustificationType (juce::Justification::centred);
 
     addAndMakeVisible (envelopeComponent);
     envelopeComponent.onChanged = [this] {
@@ -43,7 +73,8 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
 void AudioPluginAudioProcessorEditor::resized()
 {
-    envelopeComponent.setBounds (10, 50, getWidth()/2 - 20, 200);
-    levelLabel       .setBounds (getWidth() - 110, 50, 120, 40);
-    levelSlider      .setBounds (getWidth() - 90, 100, 60, 150);
+    weierstrassASlider.setBounds (10, getHeight() - 110, 100, 100);
+    weierstrassBSlider.setBounds (120, getHeight() - 110, 100, 100);
+    envelopeComponent.setBounds (230, 10, getWidth() - 350, getHeight() - 20);
+    levelSlider.setBounds (getWidth() - 110, 50, 100, getHeight() - 100);
 }

@@ -22,6 +22,10 @@ private:
 
     juce::Slider levelSlider;
     juce::Label levelLabel;
+    juce::Slider weierstrassASlider;
+    juce::Slider weierstrassBSlider;
+    juce::Label weierstrassALabel;
+    juce::Label weierstrassBLabel;
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
