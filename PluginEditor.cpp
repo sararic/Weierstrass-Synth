@@ -26,9 +26,8 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     weierstrassASlider.setSliderStyle (juce::Slider::Rotary);
     weierstrassASlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
     weierstrassASlider.onValueChange = [this] {
-        if (this->weierstrassASlider.isMouseButtonDown())
-            return; // Prevents recursive calls when dragging the slider
-        processorRef.setWeierstrassParameters (weierstrassASlider.getValue(), weierstrassBSlider.getValue());
+        if (!isTimerRunning()) startTimer(100);
+        // we do not want to call setWeierstrassParameters too often, so we start a timer
     };
 
     addAndMakeVisible (weierstrassALabel);
@@ -37,14 +36,12 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     weierstrassALabel.setJustificationType (juce::Justification::centred);
 
     addAndMakeVisible (weierstrassBSlider);
-    weierstrassBSlider.setRange (0.0, 15.0, 0.01);
+    weierstrassBSlider.setRange (7.0, 30.0, 0.01);
     weierstrassBSlider.setValue (7.0, juce::dontSendNotification);
     weierstrassBSlider.setSliderStyle (juce::Slider::Rotary);
     weierstrassBSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 100, 20);
     weierstrassBSlider.onValueChange = [this] {
-        if (this->weierstrassBSlider.isMouseButtonDown())
-            return;
-        processorRef.setWeierstrassParameters (weierstrassASlider.getValue(), weierstrassBSlider.getValue());
+        if (!isTimerRunning()) startTimer(100);
     };
 
     addAndMakeVisible (weierstrassBLabel);
@@ -77,4 +74,12 @@ void AudioPluginAudioProcessorEditor::resized()
     weierstrassBSlider.setBounds (120, getHeight() - 110, 100, 100);
     envelopeComponent.setBounds (230, 10, getWidth() - 350, getHeight() - 20);
     levelSlider.setBounds (getWidth() - 110, 50, 100, getHeight() - 100);
+}
+
+void AudioPluginAudioProcessorEditor::timerCallback()
+{
+    // Here we update the Weierstrass parameters, no more than once every 100 ms
+    // to avoid flooding the processor with too many calls.
+    stopTimer();
+    processorRef.setWeierstrassParameters(weierstrassASlider.getValue(), weierstrassBSlider.getValue());
 }
